@@ -80,22 +80,36 @@ $objPHPExcel->setActiveSheetIndex(0);
 		
 	$fileName = str_replace(" ","_",date("Y-m-d").'_'.$shop).'.xlsx';
 	
-	$objWriter->save('../files/'.$fileName);
+	$fileName_to_save = $fileName;
+	
+	//$objWriter->save('../files/'.$fileName_to_save);
 	
 	$pathToFile = dirname(pathinfo(__FILE__)['dirname']).'\\files\\'.$fileName;
 	$linkToFile = str_replace("\\","\\\\",$pathToFile);
 	
+		
+	$objWriter->save('../files/'.$fileName_to_save);
 	
 	
-	if (file_exists($pathToFile)){
-		$show = "<br/><div class='row'>";
-			$show .= "<div class='col-xs-12 col-12'>";
-				$show .= "<a href = '/transfer/files/".$fileName."'  class='btn btn-primary'><i class='fa fa-download' aria-hidden='true'></i>  Download <b>".$fileName."</b></a>";
-			$show .= "</div>";
-		$show .= "</div><br/>";
-	}else{
-		 echo "Ups.. something went wrong and file wasn't created. Contact Robert.";    
-	}
+	$directory = explode("\\",dirname(dirname(__FILE__)));
+	
+	$pathToFile = dirname(pathinfo(__FILE__)['dirname']).'\\files\\'.$fileName_to_save;
+	
+		if (file_exists($pathToFile)){
+			$show = "Click to download <a href = '/".$directory[count($directory)-1]."/files/".$fileName_to_save."'>".$fileName_to_save."</a>";    
+		}else{
+			$show = "Ups.. something went wrong and file wasn't created. Contact Robert.";    
+		}
+	
+	//if (file_exists($pathToFile)){
+	//	$show = "<br/><div class='row'>";
+	//		$show .= "<div class='col-xs-12 col-12'>";
+	//			$show .= "<a href = '/transfer/files/".$fileName."'  class='btn btn-primary'><i class='fa fa-download' aria-hidden='true'></i>  Download <b>".$fileName."</b></a>";
+	//		$show .= "</div>";
+	//	$show .= "</div><br/>";
+	//}else{
+	//	 echo "Ups.. something went wrong and file wasn't created. Contact Robert.";    
+	//}
  }else{
 		$show = "<br/><div class='row'>";
 			$show .= "<div class='col-xs-12 col-12'>";
