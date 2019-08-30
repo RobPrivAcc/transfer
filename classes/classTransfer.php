@@ -33,8 +33,9 @@ class Transfer{
             $query = $this->pdo->prepare($sql);
             $query->execute();
             while($row = $query->fetch()){
+				$name = str_replace("''",'"',$row['ProductName']);
                 $productArray[] =   array(
-                                       'productName' => $row['ProductName'],
+                                       'productName' => $name,
                                        'transfered' => round($row['Transfered'],2),
                                        'invRef' => $row['InvoiceRef'],
 									   'cost' => round($row['Cost'],2),

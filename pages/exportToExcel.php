@@ -9,6 +9,8 @@ $shopsArray = json_decode($_POST['shops']);
 $productsArray = json_decode($_POST['products']);
 $shop = $_POST['shop'];
 
+
+
 require_once dirname(__FILE__) . '/../classes/Excel/PHPExcel.php';
 
 $objPHPExcel = new PHPExcel();
@@ -118,4 +120,5 @@ $objPHPExcel->setActiveSheetIndex(0);
 		$show .= "</div><br/>";
 }
 	echo $show;
+	
 ?>
