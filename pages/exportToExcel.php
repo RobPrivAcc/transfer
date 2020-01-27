@@ -7,8 +7,10 @@ ini_set('max_input_vars', 9000);
 
 $shopsArray = json_decode($_POST['shops']);
 $productsArray = json_decode($_POST['products']);
-$shop = $_POST['shop'];
+$expanses_Array = json_decode($_POST['expanses']);
 
+
+$shop = $_POST['shop'];
 
 
 require_once dirname(__FILE__) . '/../classes/Excel/PHPExcel.php';
@@ -24,16 +26,23 @@ $objPHPExcel->getProperties()->setCreator("Robert Kocjan")
 							 ->setDescription("Test document for PHPExcel, generated using PHP classes.")
 							 ->setKeywords("office PHPExcel php")
 							 ->setCategory("Test result file");
-							 
+//
+$objPHPExcel->createSheet(0);
+
+$objPHPExcel->setActiveSheetIndex(0)->setTitle("Summary");
+//
+
+
 	foreach($shopsArray as $index => $invRef){
+	    $index += 1;
 		$cellNo = 1;
 		$objPHPExcel->createSheet($index);
 		$objPHPExcel->setActiveSheetIndex($index)
             ->setCellValue('A1', 'Product Name')
             ->setCellValue('B1', "Transfered")
-				->setCellValue('C1', "Destination")
+			->setCellValue('C1', "Destination")
             ->setCellValue('D1', "Cost")
-				->setCellValue('E1', "Value");
+			->setCellValue('E1', "Value");
 			
 		$objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true);
 		 
@@ -67,13 +76,52 @@ $objPHPExcel->getProperties()->setCreator("Robert Kocjan")
 		}
 		
 			$objPHPExcel->getActiveSheet()->getStyle('F1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-			$objPHPExcel->setActiveSheetIndex($index)->setCellValue('F1', 'Total');
+			$objPHPExcel->setActiveSheetIndex($index)->setCellValue('F1', 'Total:');
 			$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth($columnWidth);
 			$objPHPExcel->getActiveSheet()->getStyle('G1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 			$objPHPExcel->setActiveSheetIndex($index)->setCellValue('G1', '=sum(E2:E'.$cellNo.')');
 			$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth($columnWidth);
 			$objPHPExcel->getActiveSheet()->getStyle('F1:G1')->getFont()->setBold(true);
 	}
+
+// set Summary tab
+
+
+$ind = 3;
+// summary transfers
+foreach($shopsArray as $index => $invRef) {
+
+    $cellNo = 1;
+
+    $objPHPExcel->setActiveSheetIndex(0)
+        ->setCellValue('A' . $ind, $invRef)
+        ->setCellValue('B' . $ind++, "='" . $invRef . "'!G1");
+}
+
+
+
+$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(30);
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2' , 'Total transfers:')->setCellValue('B2', '=SUM(B3:B' . $ind . ')');
+$objPHPExcel->setActiveSheetIndex(0)->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$objPHPExcel->setActiveSheetIndex(0)->getStyle('A2:B2')->getFont()->setBold(true);
+
+
+$ind = 3;
+// Expenses summary
+foreach ($expanses_Array as $index => $val){
+    $objPHPExcel->setActiveSheetIndex(0)
+        ->setCellValue('F' . $ind, $val[0])
+        ->setCellValue('G' . $ind, $val[1])
+        ->setCellValue('H' . $ind++, $val[2]);
+}
+
+$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(20);
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F2' , 'Total inv checked:')->setCellValue('H2', '=SUM(H3:H' . $ind . ')');
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F1' , 'Total expenses:')->setCellValue('G1', '=SUM(G3:G' . $ind . ')');
+$objPHPExcel->setActiveSheetIndex(0)->getStyle('F1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$objPHPExcel->setActiveSheetIndex(0)->getStyle('F2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$objPHPExcel->setActiveSheetIndex(0)->getStyle('F1:H2')->getFont()->setBold(true);
+
 
 $objPHPExcel->setActiveSheetIndex(0);
 
@@ -120,5 +168,4 @@ $objPHPExcel->setActiveSheetIndex(0);
 		$show .= "</div><br/>";
 }
 	echo $show;
-	
-?>
+

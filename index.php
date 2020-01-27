@@ -1,10 +1,13 @@
 <?php
-   //include('connection.php');
-   include('classes/classDbConnection.php');
-   //include('classes/classSupplier.php');
-   include("classes/classXML.php");
+    require 'loader.php';
+//    include('loader.php');
+//   //include('connection.php');
+//   include('classes/DbConnection.php');
+//   //include('classes/classSupplier.php');
+//   include("classes/XML.php");
   
     set_time_limit(0);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +42,7 @@
   <body>
 	<?php
 
-		$xml = new xmlFile($_SERVER["DOCUMENT_ROOT"].'/dbXML.xml');
+		$xml = new XML($_SERVER["DOCUMENT_ROOT"].'/dbXML.xml');
 		$array = $xml->getConnectionArray();
 
 		
@@ -133,8 +136,9 @@
 				var shop = $('#shop').val();
 				var shops = $('#arrayShops').val();
 				var products = $('#array').val();
+				var expenses_array = $('#expenses_array').val();
               //$.post( "pages/exportToExcel.php", { shop: shop, shopName: shops, product: products })
-				  $.post( "pages/exportToExcel.php", { shop: shop, shops: shops,products: products })
+				  $.post( "pages/exportToExcel.php", { shop: shop, shops: shops, products: products, expanses: expenses_array })
                   .done(function( data ) {
 							 $('#result').html(data);
                   });				
