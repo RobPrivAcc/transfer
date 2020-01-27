@@ -5,12 +5,6 @@
         private $pdo=null;
         private $date;
 
-        /*
-        function __construct($dbConnectionArray){
-            $this -> pdo = new PDO($dbConnectionArray["server"], $dbConnectionArray["user"], $dbConnectionArray["password"]);
-            $this -> date = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d")-90,   date("Y")));
-        }*/
-
         function __construct(){
             $this -> date = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d")-90,   date("Y")));
         }
@@ -18,37 +12,9 @@
         function openConnection($dbConnectionArray){
             $this -> pdo = new PDO($dbConnectionArray["server"], $dbConnectionArray["user"], $dbConnectionArray["password"]);
         }
-        /*
-        private function saleDetail($array){
-            for ($i=0;$i < count($array);$i++){
-                //print_r($array);
-                $sql = "SELECT SUM([QuantityBought]) as total, [Selling Price], (SUM([QuantityBought]) * [Selling Price]) as [value]
-                    FROM Stock
-                        inner join [Orders] on [Name of Item] = [NameOfItem]
-                        inner join [Days] on [Order Number] = OrderNo
-                    WHERE [Date] < '$this->date'
-                        AND [Name of Item] = '$array[$i]'
-                        group by [Selling Price];";
 
-                //echo $sql.'<br/>';
-                $query = $this->pdo->prepare($sql);
-                $query->execute();
-
-                if($this->saleCount($array[$i]) >0){
-                    for($j=0; $row = $query->fetch(); $j++){
-
-                    $this->productArray[] = array($array[$i],round($row['total'],2),round($row['Selling Price'],2));
-                      //$this->productArray[] = array($array[$i], array($row['ProdName']."  total",$row['Name of Item']."  selling price"));
-                    }
-                }else{
-                    $this->productArray[] = array($array[$i],"0","0");
-                }
-            }
-        }
-        */
         public function saleDetail($name){
 
-                //print_r($array);
                 $sql = "SELECT SUM([QuantityBought]) as total, [Selling Price], (SUM([QuantityBought]) * [Selling Price]) as [value], Quantity
                     FROM Stock
                         inner join [Orders] on [Name of Item] = [NameOfItem]
@@ -63,11 +29,9 @@
                 $quantity = $this->stockQuantity($name);
                 if($this->saleCount($name) >0){
                     for($j=0; $row = $query->fetch(); $j++){
-                    return array(round($row['total'],2),$quantity);
-                      //$this->productArray[] = array($array[$i], array($row['ProdName']."  total",$row['Name of Item']."  selling price"));
+                        return array(round($row['total'],2),$quantity);
                     }
                 }else{
-                    //return "0";
                     return array("0",$quantity);
                 }
 

@@ -41,7 +41,7 @@ class Expenses extends Transfer
         while($row = $query->fetch()){
             return round($row['total_checked'], 2);
         }
-
+        return 0;
     }
 
     public function getExpenses()
@@ -65,48 +65,4 @@ class Expenses extends Transfer
         return $stats;
         }
 
-//
-//        $array["Canners"] = array(
-//            array(
-//                "number" => "3936",
-//                "expenses" => 0,
-//                "checked_cost" => 640.17
-//            ),
-//            array(
-//                "number" => "4130",
-//                "expenses" => 0,
-//                "checked_cost" => 682
-//            ),
-//            array(
-//                "number" => "4180",
-//                "expenses" => 0,
-//                "checked_cost" => 876.39
-//            ),
-//            array(
-//                "number" => "4189",
-//                "expenses" => 0,
-//                "checked_cost" => 450.86
-//            ),
-//            array(
-//                "number" => "4220",
-//                "expenses" => 0,
-//                "checked_cost" => 650.07
-//            )
-//
-//        );
-//        echo "<pre>";
-//        var_dump($array);
-//        echo "</pre>";
-//        foreach ($array as $supplier => $array){
-//
-//            $expenses = 0;
-//            $costs = 0;
-//                foreach ($array as $index => $val){
-//                    $expenses = $expenses + $val['expenses'];
-//                    $costs = $costs + $val['checked_cost'];
-//                }
-//            echo $supplier.' '.$expenses.' '.$costs.'<br/>';
-//        }
-//        echo count($array["Canners"]);
-//    }
 }
