@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '4766fff9d4eab0b2368443fc2166a28e3fa910f1',
+    'reference' => '36b986559008a21baa0a0b5dc54068e229d22c7f',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,16 @@
       'aliases' => 
       array (
       ),
-      'reference' => '4766fff9d4eab0b2368443fc2166a28e3fa910f1',
+      'reference' => '36b986559008a21baa0a0b5dc54068e229d22c7f',
+    ),
+    'composer/installers' => 
+    array (
+      'pretty_version' => 'v1.11.0',
+      'version' => '1.11.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ae03311f45dfe194412081526be2e003960df74b',
     ),
     'ezyang/htmlpurifier' => 
     array (
@@ -74,6 +83,15 @@
       ),
       'reference' => '46cf3d8498b095bd33727b13fd5707263af99421',
     ),
+    'oomphinc/composer-installers-extender' => 
+    array (
+      'pretty_version' => '2.0.0',
+      'version' => '2.0.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '8d3fe38a1723e0e91076920c8bb946b1696e28ca',
+    ),
     'phpoffice/phpspreadsheet' => 
     array (
       'pretty_version' => '1.17.1',
@@ -118,6 +136,29 @@
       array (
       ),
       'reference' => '408d5eafb83c57f6365a3ca330ff23aa4a5fa39b',
+    ),
+    'roundcube/plugin-installer' => 
+    array (
+      'replaced' => 
+      array (
+        0 => '*',
+      ),
+    ),
+    'shama/baton' => 
+    array (
+      'replaced' => 
+      array (
+        0 => '*',
+      ),
+    ),
+    'snapappointments/bootstrap-select' => 
+    array (
+      'pretty_version' => 'v1.13.18',
+      'version' => '1.13.18.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '6c4c75f61e69ca54d5ab557a2b90ffdccf1c63cd',
     ),
     'symfony/polyfill-mbstring' => 
     array (

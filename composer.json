@@ -2,6 +2,8 @@
   "require": {
     "monolog/monolog": "1.0.*",
     "twbs/bootstrap": "5.0.0-beta3",
-    "phpoffice/phpspreadsheet": "^1.17"
+    "phpoffice/phpspreadsheet": "^1.17",
+    "snapappointments/bootstrap-select": "^1.13",
+    "oomphinc/composer-installers-extender": "^2.0"
   }
 }
