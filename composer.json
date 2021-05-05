@@ -1,0 +1,7 @@
+{
+  "require": {
+    "monolog/monolog": "1.0.*",
+    "twbs/bootstrap": "5.0.0-beta3",
+    "phpoffice/phpspreadsheet": "^1.17"
+  }
+}

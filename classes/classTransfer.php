@@ -16,7 +16,6 @@ class Transfer{
     }
     
     public function getTransferReference($array){
-        //'shop'=>$_POST['shopName'],'startDate'=>$_POST['dateFrom'],'endDate'=>$_POST['dateTo'
             $productArray = array();
             
         	$sql = "SELECT Distinct([Nameofitem]) AS ProductName
@@ -56,4 +55,3 @@ class Transfer{
 		}
 	}
 }
-?>

@@ -5,7 +5,15 @@ class Expenses extends Transfer
 {
     private $productArray = array();
 
-    private function getSuppliers(){
+
+
+    private function getSuppliers($is_primeline = false){
+        if($is_primeline){
+            $primline = " InvoiceRef like 'primeline%' and ";
+        }else{
+            $primline = " InvoiceRef not like 'primeline%' and ";
+        }
+
 //        $sql = "SELECT [Supplier],
 //                    [RepOrderNo],
 //                    Expenses
@@ -24,7 +32,7 @@ class Expenses extends Transfer
                 WHERE
                    [DateTime]  BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."' and 
                    InvoiceRef not like '%>%' and
-                   
+                   ".$primline."
                 [Action] like 'Replenishment Order INCREASED #%' ORDER BY Supplier;";
 
         $query = $this->pdo->prepare($sql);
@@ -55,11 +63,11 @@ class Expenses extends Transfer
         return 0;
     }
 
-    public function getExpenses()
+    public function getExpenses($is_primeline = false)
     {
         $stats = array();
 
-        $this->getSuppliers();
+        $this->getSuppliers($is_primeline);
 
         foreach ($this->productArray as $supplier => $array_data){
                 $expenses = 0;

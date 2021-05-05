@@ -45,6 +45,13 @@ if($shopName == 'Petzone'){
     $exp_tab = new Table("");
     $exp_tab -> addHeader("centerTable",array("Supplier","Expenses","Checked cost"));
     $exp_tab -> addRowT("",$expenses_array);
+
+    $primeline = new Expenses($db -> getDbConnection($db -> getDbConnectionByName($shopName)), $paramArray);
+    $primeline_array = $primeline->getExpenses(true);
+
+    $prim_tab = new Table("");
+    $prim_tab -> addHeader("centerTable",array("Supplier","Expenses","Checked cost"));
+    $prim_tab -> addRowT("",$primeline_array);
 //    echo $exp_tab -> showTable();
 ?>
 
@@ -57,6 +64,10 @@ if($shopName == 'Petzone'){
             <h3>Expenses</h3>
             <?php echo $exp_tab -> showTable();?>
         </div>
+        <div class='col-xs-12 col-lg-6'>
+            <h3>Primeline</h3>
+            <?php echo $prim_tab -> showTable();?>
+        </div>
     </div>
 
 
@@ -66,6 +77,7 @@ if($shopName == 'Petzone'){
 	echo "<input type = 'hidden' id='shop' value='".$shopName."'/>";
 	echo "<input type = 'hidden' id='array' value='".json_encode($transferArray ,true)."'/>";
 	echo "<input type = 'hidden' id='expenses_array' value='".json_encode($expenses_array ,true)."'/>";
+	echo "<input type = 'hidden' id='primeline_array' value='".json_encode($primeline_array ,true)."'/>";
 
 	echo "<input type = 'hidden' id='arrayShops' value='".json_encode($transfer->getShops(),true)."'/>";
 	echo "<script> $('#exportToExcelBtn').show();</script>";
