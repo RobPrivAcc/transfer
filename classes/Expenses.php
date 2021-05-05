@@ -1,30 +1,41 @@
 <?php
-
+//require '..\classes\loader.php';
 
 class Expenses extends Transfer
 {
     private $productArray = array();
 
     private function getSuppliers(){
-        $sql = "SELECT [Supplier],
-                    [RepOrderNo],
-                    Expenses
-                FROM [RepMain] 
-                WHERE [StockUpdateDate] 
-                BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."' 
-                    and StockAdded = 1 
-                    and InvoiceRef not like '%>%' 
-                ORDER By Supplier ASC";
+//        $sql = "SELECT [Supplier],
+//                    [RepOrderNo],
+//                    Expenses
+//                FROM [RepMain]
+//                WHERE [StockUpdateDate]
+//                BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."'
+//                    and StockAdded = 1
+//                    and InvoiceRef not like '%>%'
+//                ORDER By Supplier ASC";
+
+        $sql = "SELECT [Supplier], [Expenses],
+                       cast(SUBSTRING([Action],32,len([Action])) as Int) as 'RepOrderNo',
+                       [DateTime]
+                FROM [ActionLog]
+                    inner join [RepMain] on [RepOrderNo] = cast(SUBSTRING([Action],32,len([Action])) as Int)
+                WHERE
+                   [DateTime]  BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."' and 
+                   InvoiceRef not like '%>%' and
+                   
+                [Action] like 'Replenishment Order INCREASED #%' ORDER BY Supplier;";
 
         $query = $this->pdo->prepare($sql);
         $query->execute();
 
         while($row = $query->fetch()){
-            $this->productArray[$row['Supplier']][] = array(
+            $this->productArray[$row[0]][] = array(
 
-                    'number' => $row['RepOrderNo'],
-                    'expenses' => round($row['Expenses'], 2),
-                    'checked_cost' => $this->getOrderTotal($row['RepOrderNo'])
+                    'number' => $row[2],
+                    'expenses' => round($row[1], 2),
+                    'checked_cost' => $this->getOrderTotal($row[2])
 
               );
           }

@@ -41,11 +41,8 @@
   </head>
   <body>
 	<?php
-
 		$xml = new XML($_SERVER["DOCUMENT_ROOT"].'/dbXML.xml');
 		$array = $xml->getConnectionArray();
-
-		
 	?>
     
         <div class="row sticky-top navbar-light">
@@ -61,10 +58,11 @@
 					?>
                 </select>
             </div>
-             <div class='col-xs-6 col-6'>Date from: <input type="text" name="dateFrom" id="dateFrom" value="" />  Date to: <input type="text" name="dateTo" id="dateTo" value="" /></div>
+             <div class='col-xs-6 col-6'>
+                 Date from: <input type="text" name="dateFrom" id="dateFrom" value="" />
+                 Date to: <input type="text" name="dateTo" id="dateTo" value="" />
+             </div>
              
-             
-             <!--<div class='col-xs-3 col-3'><button type="button" class="btn btn-info" id="send">search  <i class="fa fa-search" aria-hidden="true"></i></button></div>-->
 	         <div class='col-xs-1 col-1'>
 					<button class = "btn btn-secondary" id = "search"><i class="fa fa-toggle-right fa-lg" aria-hidden="true"></i></button>
 			  </div>
@@ -101,10 +99,8 @@
 			console.log( "ready!" );
 			  $('#exportToExcelBtn').hide();
 			  $.get( "https://www.robertkocjan.com/petRepublic/ip/ipGetArray.php", function(i) {
-						//console.log(i);
 						var configArray = i;
 			  $.get( "getIpFromServer.php", { ipArray: configArray }, function(data) {
-						//console.log(data);
 				  });
 			});
 		});
@@ -114,12 +110,12 @@
         .click(function () {
 
           var shopName = $("#storeName option:selected").text();
-          var dateFrom = $("#dateFrom").val();
-          var dateTo = $("#dateTo").val();
+          var dateFrom = $("#dateFrom").val()+' 00:00:01';
+          var dateTo = $("#dateTo").val()+' 23:59:59';
             if (shopName != 'Choose store'){
-              /*  var spinner = '<Div class="text-center"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></DIV>';
+                var spinner = '<Div class="text-center"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></DIV>';
                 $('#result').html(spinner);
-                */
+
               $.post( "sql/raport.php", { shopName: shopName, dateFrom: dateFrom, dateTo:dateTo })
                   .done(function( data ) {
 							$('#result').html(data);

@@ -10,19 +10,32 @@
         }
 
         public function getTransferReference(){
-            //'shop'=>$_POST['shopName'],'startDate'=>$_POST['dateFrom'],'endDate'=>$_POST['dateTo'
                 $productArray = array();
 
-                $sql = "SELECT Distinct([Nameofitem]) AS ProductName
+//                $sql = "SELECT Distinct([Nameofitem]) AS ProductName
+//                            ,SUM([RepSub].[Quantity]) as Transfered
+//                            ,round([Supplier Cost],2) AS Cost
+//                            ,[InvoiceRef]
+//                        FROM [RepMain]
+//                            inner join [RepSub] on [RepSub].OrderNo = [RepMain].[RepOrderNo]
+//                            inner join Stock on RepSub.Nameofitem = Stock.[Name of Item]
+//                        WHERE DateOrdered BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."' AND InvoiceRef like '".$this->data_array['shop']." > %'
+//                        GROUP BY [Nameofitem],[InvoiceRef],[Supplier Cost]
+//                        ORDER BY [InvoiceRef], NameofItem";
+
+                $sql = "SELECT Distinct(RepSub.[Nameofitem]) AS ProductName
                             ,SUM([RepSub].[Quantity]) as Transfered
                             ,round([Supplier Cost],2) AS Cost
-                            ,[InvoiceRef]
-                        FROM [RepMain]
+                            ,[RepMain].[InvoiceRef]
+                        FROM [ActionLog]
+                            left join [RepMain] on [RepOrderNo] = cast(SUBSTRING(REPLACE([Action], ' (False)', ''),32,len(REPLACE([Action], ' (False)', ''))) as Int)
                             inner join [RepSub] on [RepSub].OrderNo = [RepMain].[RepOrderNo]
                             inner join Stock on RepSub.Nameofitem = Stock.[Name of Item]
-                        WHERE DateOrdered BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."' AND InvoiceRef like '".$this->data_array['shop']." > %' 
+                        WHERE
+                            [DateTime]  BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."' and
+                            [Action] like 'Replenishment Order DECREASED #%'
                         GROUP BY [Nameofitem],[InvoiceRef],[Supplier Cost]
-                        ORDER BY [InvoiceRef], NameofItem";
+                        ORDER BY [InvoiceRef], NameofItem;";
 
                 $query = $this->pdo->prepare($sql);
                 $query->execute();
