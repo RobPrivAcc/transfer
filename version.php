@@ -1,7 +1,9 @@
 <?php
-echo "1.1.3";
+echo "1.1.4";
 /*
  *
+ *  ver. 1.1.4
+        Changed bootstrap layout
  *  ver. 1.1.3
         Fixed booked date issue
  *  ver. 1.1.0
