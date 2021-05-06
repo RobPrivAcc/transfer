@@ -121,7 +121,7 @@ $array = $xml->getConnectionArray();
 <script>
     $( document ).ready(function() {
         console.log( "ready!" );
-        // $('#exportToExcelBtn').hide();
+        $('#exportToExcelBtn').hide();
         $.get( "https://www.robertkocjan.com/petRepublic/ip/ipGetArray.php", function(i) {
             var configArray = i;
             $.get( "getIpFromServer.php", { ipArray: configArray }, function(data) {

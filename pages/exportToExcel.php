@@ -15,7 +15,7 @@ $productsArray = json_decode($_POST['products']);
 $expanses_Array = json_decode($_POST['expanses']);
 $primeline_Array = json_decode($_POST['primeline']);
 
-var_dump($primeline_Array);
+
 $shop = $_POST['shop'];
 
 

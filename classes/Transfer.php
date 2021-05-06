@@ -19,7 +19,8 @@
 //                        FROM [RepMain]
 //                            inner join [RepSub] on [RepSub].OrderNo = [RepMain].[RepOrderNo]
 //                            inner join Stock on RepSub.Nameofitem = Stock.[Name of Item]
-//                        WHERE DateOrdered BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."' AND InvoiceRef like '".$this->data_array['shop']." > %'
+//                        WHERE DateOrdered BETWEEN '".$this->data_array['startDate']."'
+// AND '".$this->data_array['endDate']."' AND InvoiceRef like '".$this->data_array['shop']." > %'
 //                        GROUP BY [Nameofitem],[InvoiceRef],[Supplier Cost]
 //                        ORDER BY [InvoiceRef], NameofItem";
 
@@ -34,6 +35,7 @@
                         WHERE
                             [DateTime]  BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."' and
                             [Action] like 'Replenishment Order DECREASED #%'
+                            AND InvoiceRef like '".$this->data_array['shop']." > %'
                         GROUP BY [Nameofitem],[InvoiceRef],[Supplier Cost]
                         ORDER BY [InvoiceRef], NameofItem;";
 
