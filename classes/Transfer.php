@@ -63,6 +63,8 @@
         public function getShops(){
             if(is_array($this->shopArray) && count($this->shopArray)>0){
                 return $this->shopArray;
+            }else{
+                return array();
             }
         }
     }

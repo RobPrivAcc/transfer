@@ -1,11 +1,7 @@
 <?php
+session_start();
 require 'loader.php';
 require 'vendor\autoload.php';
-//    include('loader.php');
-//   //include('connection.php');
-//   include('classes/DbConnection.php');
-//   //include('classes/classSupplier.php');
-//   include("classes/XML.php");
 
 set_time_limit(0);
 
@@ -16,30 +12,6 @@ set_time_limit(0);
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<!--    Bootstrap CSS -->
-<!--    <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">-->
-<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">-->
-<!--    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">-->
-<!--    <link rel="stylesheet" href="css/myCSS.css">-->
-<!---->
-<!--     jQuery first, then Popper.js, then Bootstrap JS -->
-<!--    <script src="js/jQuery/jquery-3.6.0.min.js" crossorigin="anonymous"></script>-->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>-->
-<!--        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>-->
-<!--    <script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>-->
-<!---->
-<!--     Include Required Prerequisites -->
-<!--    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>-->
-<!--    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>-->
-<!--    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />-->
-<!---->
-<!--     Include Date Range Picker -->
-<!--    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>-->
-<!--    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />-->
-<!---->
-<!---->
-
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -89,8 +61,7 @@ $array = $xml->getConnectionArray();
                 <button class = "btn btn-secondary" id = "search">
                         Search
                 </button>
-<!--                <button type="button" class="btn btn-outline-dark me-2">Login</button>-->
-<!--                <button type="button" class="btn btn-warning">Sign-up</button>-->
+
                 <button class = "btn btn-success" id = "exportToExcelBtn">
                                     <i class="fa fa-file-excel-o fa-lg" aria-hidden="true"></i>
                 </button>
@@ -142,8 +113,6 @@ $array = $xml->getConnectionArray();
                 $.post( "sql/raport.php", { shopName: shopName, dateFrom: dateFrom, dateTo:dateTo })
                     .done(function( data ) {
                         $('#result').html(data);
-
-                        $('#result').html(data);
                     });
             }else{
                 alert("Choose store first!");
@@ -156,6 +125,7 @@ $array = $xml->getConnectionArray();
             var products = $('#array').val();
             var expenses_array = $('#expenses_array').val();
             var primeline_array = $('#primeline_array').val();
+            console.log(expenses_array);
             //$.post( "pages/exportToExcel.php", { shop: shop, shopName: shops, product: products })
             $.post( "pages/exportToExcel.php", { shop: shop, shops: shops, products: products, expanses: expenses_array, primeline: primeline_array })
                 .done(function( data ) {

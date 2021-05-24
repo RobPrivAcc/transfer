@@ -1,11 +1,5 @@
 <?php
     require '../loader.php';
-//include('../classes/DbConnection.php');
-//include('../classes/Table.php');
-//include('../classes/XML.php');
-//include('../classes/Transfer.php');
-//include('../classes/Expenses.php');
-//include('../classes/ConnectionString.php');
 
 
 $shopName = $_POST['shopName'];

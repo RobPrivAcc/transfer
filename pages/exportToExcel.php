@@ -15,7 +15,6 @@ $productsArray = json_decode($_POST['products']);
 $expanses_Array = json_decode($_POST['expanses']);
 $primeline_Array = json_decode($_POST['primeline']);
 
-
 $shop = $_POST['shop'];
 
 
@@ -27,71 +26,70 @@ $objPHPExcel = new Spreadsheet();
 
 $objPHPExcel->getProperties()->setCreator("Robert Kocjan")
 							 ->setLastModifiedBy("Robert Kocjan")
-							 ->setTitle("PHPExcel Test Document")
-							 ->setSubject("PHPExcel Test Document")
-							 ->setDescription("Test document for PHPExcel, generated using PHP classes.")
-							 ->setKeywords("office PHPExcel php")
-							 ->setCategory("Test result file");
+							 ->setTitle($shop. "transfers");
 //
 $objPHPExcel->createSheet(0);
 
 $objPHPExcel->setActiveSheetIndex(0)->setTitle("Summary");
 //
 
-
-	foreach($shopsArray as $index => $invRef){
-	    $index += 1;
-		$cellNo = 1;
-		$objPHPExcel->createSheet($index);
-		$objPHPExcel->setActiveSheetIndex($index)
+if($shopsArray) {
+    foreach ($shopsArray as $index => $invRef) {
+        $index += 1;
+        $cellNo = 1;
+        $objPHPExcel->createSheet($index);
+        $objPHPExcel->setActiveSheetIndex($index)
             ->setCellValue('A1', 'Product Name')
             ->setCellValue('B1', "Transfered")
-			->setCellValue('C1', "Destination")
+            ->setCellValue('C1', "Destination")
             ->setCellValue('D1', "Cost")
-			->setCellValue('E1', "Value");
-			
-		$objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true);
-		 
-		$columnWidth = 12;
-		 
-		$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(80);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth($columnWidth+5);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth($columnWidth+15);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth($columnWidth);
-		$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth($columnWidth);
-		 
-		 
-		$objPHPExcel->getActiveSheet()->setTitle($invRef)->getStyle('A1:E1')->getAlignment()->setWrapText(TRUE);
-		$objPHPExcel->getActiveSheet()->setAutoFilter($objPHPExcel->getActiveSheet()->calculateWorksheetDimension());
-		$objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-		
-		foreach($productsArray as $productIndex => $productValue){
-			//print_r($productValue);
-			//echo $productValue->productName.'<br/>';
-			if($invRef == $productValue->invRef){
-				$cellNo++;
-				$objPHPExcel->setActiveSheetIndex($index)->setCellValue('A'.$cellNo, $productValue->productName);
-				$objPHPExcel->setActiveSheetIndex($index)->setCellValue('B'.$cellNo, $productValue->transfered);
-				$objPHPExcel->setActiveSheetIndex($index)->setCellValue('C'.$cellNo, $productValue->invRef);
-				$objPHPExcel->setActiveSheetIndex($index)->setCellValue('D'.$cellNo, $productValue->cost);
-				$objPHPExcel->setActiveSheetIndex($index)->setCellValue('E'.$cellNo, $productValue->value);
-				
-			}
-			
-			
-		}
-		
-			$objPHPExcel->getActiveSheet()->getStyle('F1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
-			$objPHPExcel->setActiveSheetIndex($index)->setCellValue('F1', 'Total:');
-			$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth($columnWidth);
-			$objPHPExcel->getActiveSheet()->getStyle('G1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-			$objPHPExcel->setActiveSheetIndex($index)->setCellValue('G1', '=sum(E2:E'.$cellNo.')');
-			$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth($columnWidth);
-			$objPHPExcel->getActiveSheet()->getStyle('F1:G1')->getFont()->setBold(true);
-	}
+            ->setCellValue('E1', "Value");
 
-// set Summary tab
+        $objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true);
 
+        $columnWidth = 12;
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(80);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth($columnWidth + 5);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth($columnWidth + 15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth($columnWidth);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth($columnWidth);
+
+
+        $objPHPExcel->getActiveSheet()->setTitle($invRef)->getStyle('A1:E1')->getAlignment()->setWrapText(TRUE);
+        $objPHPExcel->getActiveSheet()->setAutoFilter($objPHPExcel->getActiveSheet()->calculateWorksheetDimension());
+        $objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        foreach ($productsArray as $productIndex => $productValue) {
+            //print_r($productValue);
+            //echo $productValue->productName.'<br/>';
+            if ($invRef == $productValue->invRef) {
+                $cellNo++;
+                $objPHPExcel->setActiveSheetIndex($index)->setCellValue('A' . $cellNo, $productValue->productName);
+                $objPHPExcel->setActiveSheetIndex($index)->setCellValue('B' . $cellNo, $productValue->transfered);
+                $objPHPExcel->setActiveSheetIndex($index)->setCellValue('C' . $cellNo, $productValue->invRef);
+                $objPHPExcel->setActiveSheetIndex($index)->setCellValue('D' . $cellNo, $productValue->cost);
+                $objPHPExcel->setActiveSheetIndex($index)->setCellValue('E' . $cellNo, $productValue->value);
+
+            }
+
+
+        }
+
+        $objPHPExcel->getActiveSheet()->getStyle('F1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+        $objPHPExcel->setActiveSheetIndex($index)->setCellValue('F1', 'Total:');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth($columnWidth);
+        $objPHPExcel->getActiveSheet()->getStyle('G1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+        $objPHPExcel->setActiveSheetIndex($index)->setCellValue('G1', '=sum(E2:E' . $cellNo . ')');
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth($columnWidth);
+        $objPHPExcel->getActiveSheet()->getStyle('F1:G1')->getFont()->setBold(true);
+    }
+}
+
+
+/*
+ * Transfers module
+ * */
 
 $ind = 3;
 
@@ -116,10 +114,11 @@ $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2' , 'Total transfers:')->s
 $objPHPExcel->setActiveSheetIndex(0)->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
 $objPHPExcel->setActiveSheetIndex(0)->getStyle('A2:B2')->getFont()->setBold(true);
 
-
+/*
+ * Invoices and expenses module
+ * */
 $ind = 4;
 
-// Expenses summary
 $objPHPExcel->getActiveSheet()->mergeCells('F1:H1');
 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F1', 'Booked in orders');
 $objPHPExcel->setActiveSheetIndex(0)->getStyle('F1')->getFont()->setBold(true);
@@ -138,6 +137,12 @@ $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F2' , 'Total expenses:')->se
 $objPHPExcel->setActiveSheetIndex(0)->getStyle('F2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
 $objPHPExcel->setActiveSheetIndex(0)->getStyle('F3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
 $objPHPExcel->setActiveSheetIndex(0)->getStyle('F2:H3')->getFont()->setBold(true);
+
+/*
+ * Primeline module
+ *
+ * */
+
 
 $row = 4;
 
@@ -163,7 +168,7 @@ if(count($primeline_Array) > 0) {
 }
 $objPHPExcel->setActiveSheetIndex(0);
 
- if(count($productsArray) > 0){ 
+// if(count($productsArray) > 0){
 	$objWriter = new Xlsx($objPHPExcel, 'Excel2007');
 //	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 
@@ -190,12 +195,12 @@ $objPHPExcel->setActiveSheetIndex(0);
 			$show = "Ups.. something went wrong and file wasn't created. Contact Robert.";    
 		}
 	
- }else{
-		$show = "<br/><div class='row'>";
-			$show .= "<div class='col-xs-12 col-12'>";
-				$show .= "No results found";
-			$show .= "</div>";
-		$show .= "</div><br/>";
-}
+// }else{
+//		$show = "<br/><div class='row'>";
+//			$show .= "<div class='col-xs-12 col-12'>";
+//				$show .= "No results found";
+//			$show .= "</div>";
+//		$show .= "</div><br/>";
+//}
 	echo $show;
 

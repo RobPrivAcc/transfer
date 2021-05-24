@@ -2,6 +2,8 @@
     class Table{
 
         private $table = "";
+        private $tableHeader = "";
+        private $tableRow = "";
 
         function __construct($class){
             if(strlen($class)!=0){
@@ -24,7 +26,7 @@
                 }
                 $header .= "</TR>";
             }
-            $this -> table .= $header;
+            $this -> tableHeader = $header;
         }
 
         function addRow($class,$array){
@@ -52,45 +54,54 @@
         function addRowT($class,$array){
             $header = "";
 
-            if(strlen($class)!=0){
-                $class = ' class="'.$class.'"';
-            }
-            $isArray = is_array($array[0]) ? 1 : 0;
-            if($isArray == 1){
+            if(count($array) > 0) {
 
-                for($i =0; $i < count($array);$i++){
-                    $header .= "<TR>";
-                        foreach($array[$i] as $key=>$value){
-                            if ($i!=0){
-                                $header .= "<TD".$class.">".$value."</TD>";
-                            }else{
-                                $header .= "<TD>".$value."</TD>";
+                if (strlen($class) != 0) {
+                    $class = ' class="' . $class . '"';
+                }
+                $isArray = is_array($array[0]) ? 1 : 0;
+                if ($isArray == 1) {
+
+                    for ($i = 0; $i < count($array); $i++) {
+                        $header .= "<TR>";
+                        foreach ($array[$i] as $key => $value) {
+                            if ($i != 0) {
+                                $header .= "<TD" . $class . ">" . $value . "</TD>";
+                            } else {
+                                $header .= "<TD>" . $value . "</TD>";
                             }
-                            //echo $key.':  '.$value.', ';
                         }
-                    $header .= "</TR>";
-                }
-
-            }else{
-                if(count($array) > 0){
-                    $header .= "<TR>";
-                    for($i = 0; $i < count($array); $i++){
-                        if ($i!=0){
-                            $header .= "<TD".$class.">".$array[$i]."</TD>";
-                        }else{
-                            $header .= "<TD>".$array[$i]."</TD>";
-                        }
+                        $header .= "</TR>";
                     }
-                    $header .= "</TR>";
-                }
-            }
 
-            $this -> table .= $header;
+                } else {
+                    if (count($array) > 0) {
+                        $header .= "<TR>";
+                        for ($i = 0; $i < count($array); $i++) {
+                            if ($i != 0) {
+                                $header .= "<TD" . $class . ">" . $array[$i] . "</TD>";
+                            } else {
+                                $header .= "<TD>" . $array[$i] . "</TD>";
+                            }
+                        }
+                        $header .= "</TR>";
+                    }
+                }
+
+                $this -> tableRow = $header;
+            }
         }
     
     function showTable(){
-        $this -> table .= "</table>";
-        return $this -> table;
+        if($this->tableRow != ""){
+            $this->table .= $this->tableHeader;
+            $this->table .= $this->tableRow;
+            $this -> table .= "</table>";
+            return $this -> table;
+        }
+        else{
+            return "No transfers sent.";
+        }
     }
     
 }
