@@ -1,7 +1,9 @@
 <?php
-echo "1.1.5";
+echo "1.1.6";
 /*
  *
+ *  *  ver. 1.1.6
+ * AND	[Action] not like 'Replenishment Order DECREASED #%(True)' -- added to skip not transfered orders
  *
  *  *  ver. 1.1.5
         No transfers fixed

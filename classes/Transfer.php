@@ -36,6 +36,7 @@
                             [DateTime]  BETWEEN '".$this->data_array['startDate']."' AND '".$this->data_array['endDate']."' and
                             [Action] like 'Replenishment Order DECREASED #%'
                             AND InvoiceRef like '".$this->data_array['shop']." > %'
+                            AND	[Action] not like 'Replenishment Order DECREASED #%(True)'
                         GROUP BY [Nameofitem],[InvoiceRef],[Supplier Cost]
                         ORDER BY [InvoiceRef], NameofItem;";
 
